@@ -15,8 +15,19 @@ class BGLayer(Layer):
 
 class WaitLayer(Layer):
 	def __init__(self, game_controller):
+                super(WaitLayer, self).__init__()
+		self.game_controller = game_controller
+		
 		bg = Sprite('images/menu/wait_screen.png')
 		bg.position = (400, 300)
+
+		self.add(bg)
+		#self.add(player)
+
+		self.schedule(self.update)
+
+	def update(self, dt):
+		self.game_controller.wait_server()
 
 
 
