@@ -44,13 +44,28 @@ class MainMenu(Menu):
 		self.menu_halign = CENTER
 
 		items = []
-		items.append(MenuItem('Новая игра'))
-		items.append(MenuItem('Управление'))
-		items.append(MenuItem('Настройки'))
-		items.append(MenuItem('Выход')))
+		items.append(MenuItem('Новая игра', self.on_new_game))
+		items.append(MenuItem('Управление', self.on_scores))
+		items.append(MenuItem('Настройки', self.on_options))
+		items.append(MenuItem('Выход', self.on_quit)))
 
-		self.create_menu()
+		self.create_menu(items, zoom_in(), zoom_out())
+		self.game_controller = game_controller
+        
+	def on_new_game(self):
+		self.game_controller.connect_to_server()
+		self.parent.switch_to(2)
+		#self.game_controller.wait_server()
+		#self.game_controller.sig_wait_server.sig.emit()
 
+	def on_scores(self):
+		print("on_old_game()")
+
+	def on_options(self):
+		self.parent.switch_to(1)
+
+	def on_quit(self):
+		director.pop()
 
 class OptionMenu(Menu):
 	def __init__(self):
