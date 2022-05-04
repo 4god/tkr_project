@@ -15,11 +15,14 @@ class BGLayer(Layer):
 
 class WaitLayer(Layer):
 	def __init__(self, game_controller):
-                super(WaitLayer, self).__init__()
+		super(WaitLayer, self).__init__()
 		self.game_controller = game_controller
-		
+
 		bg = Sprite('images/menu/wait_screen.png')
 		bg.position = (400, 300)
+
+		#player = Sprite(f"images/king_right/1/Fall.png")
+		#player.position = (400, 300)
 
 		self.add(bg)
 		#self.add(player)
@@ -28,7 +31,6 @@ class WaitLayer(Layer):
 
 	def update(self, dt):
 		self.game_controller.wait_server()
-
 
 
 class MainMenu(Menu):
@@ -47,11 +49,12 @@ class MainMenu(Menu):
 		items.append(MenuItem('Новая игра', self.on_new_game))
 		items.append(MenuItem('Управление', self.on_scores))
 		items.append(MenuItem('Настройки', self.on_options))
-		items.append(MenuItem('Выход', self.on_quit)))
+		items.append(MenuItem('Выход', self.on_quit))
 
 		self.create_menu(items, zoom_in(), zoom_out())
 		self.game_controller = game_controller
-        
+
+	# TODO: fix freeze on pressing
 	def on_new_game(self):
 		self.game_controller.connect_to_server()
 		self.parent.switch_to(2)
@@ -67,9 +70,10 @@ class MainMenu(Menu):
 	def on_quit(self):
 		director.pop()
 
+
 class OptionMenu(Menu):
 	def __init__(self):
-		super(OptionMenu, self).__init__("Stardust crusader")
+		super(OptionMenu, self).__init__("A Heart of Tar'Karas")
 
 		self.font_title['font_size'] = 40
 
@@ -82,7 +86,7 @@ class OptionMenu(Menu):
 		items.append(MenuItem('OK', self.on_quit))
 		self.create_menu(items, shake(), shake_back())
 
-        def on_fullscreen(self):
+	def on_fullscreen(self):
 		director.window.set_fullscreen(not director.window.fullscreen)
 
 	def on_quit(self):
